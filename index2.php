@@ -13,7 +13,7 @@ $maPetiteEntreprise = new Entreprise(
         new Employe("B", "Personne", new DateTime('1982-01-01'), "Rhône-Alpes", new DateTime('2012-01-01') , 3200, 10), 
         new Employe("C", "Personne", new DateTime('1984-01-01'), "Rhône-Alpes", new DateTime('2014-01-01') , 3800, 450)
     ],
-    10000
+    15000
 ) ;
 
 echo "<h1>Initialement :</h1><pre>" ;
@@ -28,6 +28,11 @@ echo "</pre>" ;
 
 
 echo "<h1>Et après versement de salaires :</h1><pre>" ;
-$maPetiteEntreprise -> verserSalaires($ursaaf) ;
+$coutSalaires = $maPetiteEntreprise -> verserSalaires($ursaaf) ;
 $maPetiteEntreprise -> afficherEmployes() ;
 echo "</pre>" ;
+
+echo "Chiffre d'affaire : ". $maPetiteEntreprise ->getCA()."<br/>" ;
+echo "Coût des salaires : ". $coutSalaires."<br/>" ;
+$maPetiteEntreprise -> calculBenefices() ;
+echo "Bénéfice net : ". $maPetiteEntreprise -> getBenefices() ;

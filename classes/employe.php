@@ -72,4 +72,6 @@ class Employe extends Personne {
         //toucher le reste
         $this -> compteEnBanque += $salaireNet ;
     }
+    
+    
 }

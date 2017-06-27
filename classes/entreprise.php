@@ -2,10 +2,12 @@
 class Entreprise {
     protected $employes ;
     protected $chiffreAffaire ;
+    protected $benefices ;
 
     public function __construct(array $listeEmploye, int $CA) {
         $this -> setEmployes($listeEmploye) ;
         $this -> setCA($CA) ;
+        $this -> benefices = 0 ;
     }
 
     /*fonctions SET */
@@ -23,6 +25,9 @@ class Entreprise {
     public function getCA():int {
         return $this -> chiffreAffaire ;
     }
+    public function getBenefices():int {
+        return $this -> benefices ;
+    }
 
     /*autres fonctions */
     public function reevaluation() {
@@ -36,16 +41,19 @@ class Entreprise {
     }
     
     public function verserSalaires($caisseCotisation) {
+        $totalSalaires = 0 ;
         
         foreach($this -> employes as $employe) {
             $salaireBrut = $employe -> getSalaire() ;
             
-            //on prélève le salaire sur le chiffre d'affaire
-            $this -> chiffreAffaire -= $salaireBrut ;
+            //on prend en compte le salaire dans les comptes de l'entreprise
+            $totalSalaires += $salaireBrut ;
 
             //on fait toucher le salaire
             $employe -> toucherSalaire($salaireBrut, $caisseCotisation) ;
         }
+        
+        return $totalSalaires ;
     }
     
     public function afficherEmployes() {
@@ -54,5 +62,16 @@ class Entreprise {
             echo "Salaire : ".$employe -> getSalaire()." " ;
             echo "Compte : ".$employe -> getCompteEnBanque()."</p>" ;
         }
+    }
+    
+    public function calculBenefices() {
+        $totalSalaires = 0 ;
+        
+        foreach($this -> employes as $employe) {
+            $salaireBrut = $employe -> getSalaire() ;
+            $totalSalaires += $salaireBrut ; 
+        }
+        
+        $this -> benefices = $this -> chiffreAffaire - $totalSalaires ;
     }
 }
